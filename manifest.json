@@ -1,0 +1,35 @@
+{
+  "name": "LOL Smart Ping",
+  "description": "Add smart ping of League of Legends on Chrome !",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "activeTab", "tabs", "scripting","http://*/*", "https://*/*"],
+  "action": {
+    "default_icon": {
+      "16": "/images/logo16.png",
+      "32": "/images/logo32.png",
+      "48": "/images/logo48.png",
+      "128": "/images/logo128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/logo16.png",
+    "32": "/images/logo32.png",
+    "48": "/images/logo48.png",
+    "128": "/images/logo128.png"
+  },
+  "commands": {
+    "hello": {
+      "suggested_key": "Ctrl+Shift+E",
+      "description": "Say Hello"
+    }
+  },
+  "host_permissions": [
+    "https://*/",
+    "http://*/"
+  ],
+  
+}
