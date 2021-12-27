@@ -1,29 +1,43 @@
+let curPos = {"x": 0, "y": 0};
 
-// const canvas = document.createElement('canvas');
+let img = document.createElement("img");
 
-// canvas.id = "my-canvas";
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
-// canvas.style.top = '0px';
-// canvas.style.position = "absolute";
-// canvas.style.zIndex = 999;
+// The image seems accessible but doesn't show up on the page for me
+img.src = chrome.runtime.getURL("/images/logo128.png");
 
-// const body = document.getElementsByTagName("body")[0];
-// body.appendChild(canvas);
+// Same problem
+// img.src = "chrome-extension://ngpbfilaedghaadgnlbdoggcghcdinop/images/logo32.png";
+
+// But a random image like this works fine
+// img.src = "https://www1.ac-grenoble.fr/sites/ac_grenoble/files/site_logo/2020-11/09_logoAC_GRENOBLE_normalWEB.jpg"
+img.alt= "Ping!";
+img.id = "Ping";
+
+img.style.position = "absolute";
+img.style.display = "none";
+img.style.zIndex = 999;
 
 
-// Some optional drawings.
-// const ctx = canvas.getContext("2d");
-// ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
-// ctx.fillRect(100, 100, 200, 200);
-// ctx.fillStyle = "rgba(0, 255, 0, 0.2)";
-// ctx.fillRect(150, 150, 200, 200);
-// ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
-// ctx.fillRect(200, 50, 200, 200);
+document.body.appendChild(img);
 
 document.addEventListener('keydown', (e) => {
 	if(e.key === "Control") {
-		console.log("Hello World");
+		// TODO : Center the image
+		img.style.left = curPos.x + "px";
+		img.style.top = curPos.y + "px";
+		img.style.display = "block";
 		
+		console.log(img);
 	}
+});
+
+document.addEventListener('keyup', (e) => {
+	if(e.key === "Control") {
+		img.style.display = "none";
+	}
+});
+
+document.addEventListener('mousemove', (e) => {
+	curPos.x = e.pageX;
+	curPos.y = e.pageY;
 });
