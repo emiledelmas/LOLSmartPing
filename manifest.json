@@ -6,7 +6,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "activeTab", "tabs", "scripting","http://*/*", "https://*/*"],
+  "permissions": ["storage", "activeTab", "tabs", "scripting"],
   "action": {
     "default_icon": {
       "16": "/images/logo16.png",
@@ -30,6 +30,5 @@
   "host_permissions": [
     "https://*/",
     "http://*/"
-  ],
-  
+  ]  
 }
