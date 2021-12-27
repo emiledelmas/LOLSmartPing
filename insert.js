@@ -113,7 +113,6 @@ function ping() {
 
 
 function fadeOut() {
-    img.style.opacity = 1;
     var tick = function () {
         img.style.opacity = img.style.opacity - 0.05;
         if (+img.style.opacity > 0) {
