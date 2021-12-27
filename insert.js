@@ -1,43 +1,83 @@
-let curPos = {"x": 0, "y": 0};
+let imgPos = {"x": 0, "y": 0};  // pos of the ping image
+let curPos = {"x": 0, "y": 0};  // cursor pos
+let controlPressed; // true if Ctrl pressed
+
+let [pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
 
 let img = document.createElement("img");
 
-// The image seems accessible but doesn't show up on the page for me
-img.src = chrome.runtime.getURL("/images/LoL_ping_menu.png");
-
-// Same problem
-// img.src = "chrome-extension://__MSG_@@extension_id__/images/LoL_ping_menu.png";
-
-// But a random image like this works fine
-// img.src = "https://www1.ac-grenoble.fr/sites/ac_grenoble/files/site_logo/2020-11/09_logoAC_GRENOBLE_normalWEB.jpg"
+// Images settings
+img.src = chrome.runtime.getURL("/images/logo128.png");
 img.alt= "Ping!";
-img.id = "Ping";
 
+// Image css
 img.style.position = "absolute";
-img.style.display = "none";
+img.style.display = "none"; // hide by default
 img.style.zIndex = 999;
-
 
 document.body.appendChild(img);
 
 document.addEventListener('keydown', (e) => {
 	if(e.key === "Control") {
-		// TODO : Center the image
-		img.style.left = curPos.x + "px";
-		img.style.top = curPos.y + "px";
-		img.style.display = "block";
+		controlPressed = true;
 		
-		console.log(img);
+		// Position the ping image
+		img.style.left = (imgPos.x - 128 / 2) + "px";
+		img.style.top = (imgPos.y - 128 / 2) + "px";
+		img.style.display = "block";
 	}
 });
 
 document.addEventListener('keyup', (e) => {
 	if(e.key === "Control") {
-		img.style.display = "none";
+		controlPressed = false;
+		
+		// Normal ping if the mouse did not move
+		if (![pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].includes(true))
+			pingNormal = true;
+		
+		ping();
+		img.style.display = "none"; // hide the ping image
 	}
 });
 
 document.addEventListener('mousemove', (e) => {
-	curPos.x = e.pageX;
-	curPos.y = e.pageY;
+	if(!controlPressed) {
+		// Move the image with the mouse iff Ctrl is up
+		imgPos.x = e.pageX;
+		imgPos.y = e.pageY;
+	}
+	else {
+		// To do if the image is there
+		
+		// reset pings
+		[pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
+		
+		// Retrieve curor Position
+		curPos.x = e.pageX;
+		curPos.y = e.pageY;
+		
+		// Check wether it is up, down, right or left
+		dx = curPos.x - imgPos.x;
+		dy = curPos.y - imgPos.y;
+		if (Math.abs(dx)<10 && Math.abs(dy)<10) {
+			pingNormal = true;
+		}
+		else if(Math.abs(dx) > Math.abs(dy)) {
+			if(dx > 0) pingOmw = true;
+			else pingWtf = true;
+		}
+		else {
+			if(dy > 0) pingHelp = true;
+			else pingDanger = true;
+		}
+	}
 });
+
+
+function ping() {
+	console.log(pingDanger, pingWtf, pingHelp, pingOmw, pingNormal);
+	
+	// cancel pings
+	[pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
+}
