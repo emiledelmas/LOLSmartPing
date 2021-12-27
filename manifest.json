@@ -24,5 +24,9 @@
   "host_permissions": [
     "https://*/",
     "http://*/"
-  ]  
+  ],
+  "web_accessible_resources": [{
+    "resources": ["images/LoL_ping_menu.png"],
+    "matches": ["<all_urls>"]
+    }]
 }

@@ -3,10 +3,10 @@ let curPos = {"x": 0, "y": 0};
 let img = document.createElement("img");
 
 // The image seems accessible but doesn't show up on the page for me
-img.src = chrome.runtime.getURL("/images/logo128.png");
+img.src = chrome.runtime.getURL("/images/LoL_ping_menu.png");
 
 // Same problem
-// img.src = "chrome-extension://ngpbfilaedghaadgnlbdoggcghcdinop/images/logo32.png";
+// img.src = "chrome-extension://__MSG_@@extension_id__/images/LoL_ping_menu.png";
 
 // But a random image like this works fine
 // img.src = "https://www1.ac-grenoble.fr/sites/ac_grenoble/files/site_logo/2020-11/09_logoAC_GRENOBLE_normalWEB.jpg"
