@@ -26,7 +26,7 @@
     "http://*/"
   ],
   "web_accessible_resources": [{
-    "resources": ["images/LoL_ping_menu.png"],
+    "resources": ["images/logo128.png"],
     "matches": ["<all_urls>"]
     }]
 }
