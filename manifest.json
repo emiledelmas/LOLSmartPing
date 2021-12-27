@@ -21,12 +21,6 @@
     "48": "/images/logo48.png",
     "128": "/images/logo128.png"
   },
-  "commands": {
-    "hello": {
-      "suggested_key": "Ctrl+Shift+E",
-      "description": "Say Hello"
-    }
-  },
   "host_permissions": [
     "https://*/",
     "http://*/"
