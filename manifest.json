@@ -30,13 +30,20 @@
 		"/images/logo16.png",
 		"/images/logo32.png",
 		"/images/logo48.png",
-		"images/logo128.png",
-		"images/LoL_ping_menu.png",
-		"sounds/pingDanger.mp3",
-		"sounds/pingOmw.mp3",
-		"sounds/pingHelp.mp3",
-		"sounds/pingWtf.mp3",
-		"sounds/pingNormal.mp3"
+		"/images/logo128.png",
+		"/images/LoL_ping_menu.png",
+		
+		"/images/pingDanger.png",
+		"/images/pingOmw.png",
+		"/images/pingHelp.png",
+		"/images/pingWtf.png",
+		"/images/pingNormal.png",
+		
+		"/sounds/pingDanger.mp3",
+		"/sounds/pingOmw.mp3",
+		"/sounds/pingHelp.mp3",
+		"/sounds/pingWtf.mp3",
+		"/sounds/pingNormal.mp3"
 	],
     "matches": ["<all_urls>"]
     }]

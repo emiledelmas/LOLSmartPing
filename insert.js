@@ -10,16 +10,23 @@ let AUDIOS = [
 	new Audio(chrome.runtime.getURL("/sounds/pingOmw.mp3")),
 	new Audio(chrome.runtime.getURL("/sounds/pingNormal.mp3")),
 ];
+let IMAGES = [
+	chrome.runtime.getURL("/images/pingDanger.png"),
+	chrome.runtime.getURL("/images/pingWtf.png"),
+	chrome.runtime.getURL("/images/pingHelp.png"),
+	chrome.runtime.getURL("/images/pingOmw.png"),
+	chrome.runtime.getURL("/images/pingNormal.png"),
+];
 
 let img = document.createElement("img");
 
-// Images settings
+// Images default settings
 img.src = chrome.runtime.getURL("/images/logo128.png");
 img.alt= "Ping!";
 
 // Image css
 img.style.position = "absolute";
-img.style.display = "none"; // hide by default
+img.style.opacity = 0; // hide by default
 img.style.zIndex = 999;
 
 document.body.appendChild(img);
@@ -28,10 +35,13 @@ document.addEventListener('keydown', (e) => {
 	if(e.key === "Control") {
 		controlPressed = true;
 		
+		// Get the menu
+		img.src = chrome.runtime.getURL("/images/logo128.png");
+		
 		// Position the ping image
 		img.style.left = (imgPos.x - 128 / 2) + "px";
 		img.style.top = (imgPos.y - 128 / 2) + "px";
-		img.style.display = "block";
+		img.style.opacity = 1;
 	}
 });
 
@@ -44,7 +54,8 @@ document.addEventListener('keyup', (e) => {
 			pingNormal = true;
 		
 		ping();
-		img.style.display = "none"; // hide the ping image
+		// hide the ping image
+		setTimeout(fadeOut, 1000);
 	}
 });
 
@@ -86,9 +97,28 @@ function ping() {
 	// what ping to ring 
 	let index = [pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].indexOf(true);
 	
-	// ring the actual ping
+	// Ring the actual ping
 	AUDIOS[index].play();
+	
+	// Display the actual ping
+	img.src = IMAGES[index];
+	
+	// Position on the circle of the ping
+	img.style.left = (imgPos.x - 64 / 2) + "px";
+	img.style.top = (imgPos.y - 64) + "px";
 	
 	// cancel pings
 	[pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
+}
+
+
+function fadeOut() {
+    img.style.opacity = 1;
+    var tick = function () {
+        img.style.opacity = img.style.opacity - 0.05;
+        if (+img.style.opacity > 0) {
+            (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
+        }
+    };
+    tick();
 }
