@@ -3,6 +3,13 @@ let curPos = {"x": 0, "y": 0};  // cursor pos
 let controlPressed; // true if Ctrl pressed
 
 let [pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
+let AUDIOS = [
+	new Audio(chrome.runtime.getURL("/sounds/pingDanger.mp3")),
+	new Audio(chrome.runtime.getURL("/sounds/pingWtf.mp3")),
+	new Audio(chrome.runtime.getURL("/sounds/pingHelp.mp3")),
+	new Audio(chrome.runtime.getURL("/sounds/pingOmw.mp3")),
+	new Audio(chrome.runtime.getURL("/sounds/pingNormal.mp3")),
+];
 
 let img = document.createElement("img");
 
@@ -75,8 +82,12 @@ document.addEventListener('mousemove', (e) => {
 });
 
 
-function ping() {
-	console.log(pingDanger, pingWtf, pingHelp, pingOmw, pingNormal);
+function ping() {	
+	// what ping to ring 
+	let index = [pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].indexOf(true);
+	
+	// ring the actual ping
+	AUDIOS[index].play();
 	
 	// cancel pings
 	[pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
