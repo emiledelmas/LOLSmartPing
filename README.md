@@ -8,7 +8,7 @@ Add smart League of Legends ping on Chrome-based browsers !
 
 1. Download the .zip,
 2. Extract the folder somewhere,
-3. Go to the extension manager of your website,
+3. Go to the extension manager of your browser,
 4. You'll probably need to activate dev mode.
 5. Add the extension by choosing the unzipped folder.
 
