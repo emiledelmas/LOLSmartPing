@@ -64,6 +64,7 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
 	if(e.key === "Control") {
 		controlPressed = false;
+		stopFadeOut = false;
 		// Normal ping if the mouse did not move
 		if (![pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].includes(true))
 			pingNormal = true;
@@ -136,6 +137,4 @@ function fadeOut() {
     };
 	if (!stopFadeOut)
 		tick();
-	else
-		stopFadeOut = false;
 }
