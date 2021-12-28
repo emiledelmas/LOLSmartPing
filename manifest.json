@@ -32,6 +32,12 @@
 		"/images/logo48.png",
 		"/images/logo128.png",
 		"/images/LoL_ping_menu.png",
+    "/images/newLogo128.png",
+    "/images/newLogoLeftHover128.png",
+    "/images/newLogoRightHover128.png",
+    "/images/newLogoDownHover128.png",
+    "/images/newLogoUpHover128.png",
+    
 		
 		"/images/pingDanger.png",
 		"/images/pingOmw.png",

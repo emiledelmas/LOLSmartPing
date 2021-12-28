@@ -1,6 +1,7 @@
 let imgPos = {"x": 0, "y": 0};  // pos of the ping image
 let curPos = {"x": 0, "y": 0};  // cursor pos
 let controlPressed; // true if Ctrl pressed
+let stopFadeOut = false; //true if user pressed Ctrl
 
 let [pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
 let AUDIOS = [
@@ -21,34 +22,48 @@ let IMAGES = [
 let img = document.createElement("img");
 
 // Images default settings
-img.src = chrome.runtime.getURL("/images/logo128.png");
+img.src = chrome.runtime.getURL("/images/newLogo128.png");
 img.alt= "Ping!";
 
 // Image css
 img.style.position = "absolute";
-img.style.opacity = 0; // hide by default
+img.style.opacity = 0; //default opacity to 0
 img.style.zIndex = 999;
 
 document.body.appendChild(img);
 
 document.addEventListener('keydown', (e) => {
 	if(e.key === "Control") {
+		if (!controlPressed) {
+			stopFadeOut = true; // Stop fadeOut
+			img.style.opacity = 1;
+		}
 		controlPressed = true;
 		
+		// Check wether it is up, down, right or left and change the image source to add hover effect
+		if (Math.abs(dx)<10 && Math.abs(dy)<10) {
+			img.src = chrome.runtime.getURL("/images/newLogo128.png");
+		}
+		else if(Math.abs(dx) > Math.abs(dy)) {
+			if(dx > 0) img.src = chrome.runtime.getURL("/images/newLogoRightHover128.png");
+			else img.src = chrome.runtime.getURL("/images/newLogoLeftHover128.png");
+		}
+		else {
+			if(dy > 0) img.src = chrome.runtime.getURL("/images/newLogoDownHover128.png");
+			else img.src = chrome.runtime.getURL("/images/newLogoUpHover128.png");
+		}
 		// Get the menu
-		img.src = chrome.runtime.getURL("/images/logo128.png");
+		
 		
 		// Position the ping image
 		img.style.left = (imgPos.x - 128 / 2) + "px";
 		img.style.top = (imgPos.y - 128 / 2) + "px";
-		img.style.opacity = 1;
 	}
 });
 
 document.addEventListener('keyup', (e) => {
 	if(e.key === "Control") {
 		controlPressed = false;
-		
 		// Normal ping if the mouse did not move
 		if (![pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].includes(true))
 			pingNormal = true;
@@ -74,12 +89,12 @@ document.addEventListener('mousemove', (e) => {
 		// Retrieve curor Position
 		curPos.x = e.pageX;
 		curPos.y = e.pageY;
-		
 		// Check wether it is up, down, right or left
 		dx = curPos.x - imgPos.x;
 		dy = curPos.y - imgPos.y;
 		if (Math.abs(dx)<10 && Math.abs(dy)<10) {
 			pingNormal = true;
+			
 		}
 		else if(Math.abs(dx) > Math.abs(dy)) {
 			if(dx > 0) pingOmw = true;
@@ -119,5 +134,8 @@ function fadeOut() {
             (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
         }
     };
-    tick();
+	if (!stopFadeOut)
+		tick();
+	else
+		stopFadeOut = false;
 }
