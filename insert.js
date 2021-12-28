@@ -105,7 +105,7 @@ img.src = chrome.runtime.getURL("/images/logo128Normal.png");
 img.alt= "Ping!";
 // css
 img.style.position = "absolute";
-img.style.opacity = 0; // hide by default
+img.style.opacity = 0; //default opacity to 0
 img.style.zIndex = 999;
 
 document.body.appendChild(img);
@@ -152,7 +152,6 @@ document.addEventListener('mousemove', (e) => {
 		// Retrieve curor Position
 		curPos.x = e.pageX;
 		curPos.y = e.pageY;
-		
 		// Check wether it is up, down, right or left
 		dx = curPos.x - imgPos.x;
 		dy = curPos.y - imgPos.y;
@@ -182,3 +181,4 @@ document.addEventListener('mousemove', (e) => {
 		}
 	}
 });
+
