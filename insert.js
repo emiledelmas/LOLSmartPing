@@ -62,7 +62,7 @@ function ping() {
 
 let imgPos = {"x": 0, "y": 0};  // pos of the ping image
 let curPos = {"x": 0, "y": 0};  // cursor pos
-let gPressed; // true if g pressed
+let ContolPressed; // true if Ctrl pressed
 
 // pings to show
 let [pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
@@ -113,8 +113,8 @@ document.body.appendChild(img);
 /* event listener */
 
 document.addEventListener('keydown', (e) => {
-	if(e.key === "g") {
-		gPressed = true;
+	if(e.key === "Control") {
+		ContolPressed = true;
 		
 		// Position the ping image
 		img.style.left = (imgPos.x - 128 / 2) + "px";
@@ -124,8 +124,8 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keyup', (e) => {
-	if(e.key === "g") {
-		gPressed = false;
+	if(e.key === "Control") {
+		ContolPressed = false;
 		img.style.opacity = 0; // hide
 		img.src = chrome.runtime.getURL("/images/logo128Normal.png");
 		
@@ -138,8 +138,8 @@ document.addEventListener('keyup', (e) => {
 });
 
 document.addEventListener('mousemove', (e) => {
-	if(!gPressed) {
-		// Move the image with the mouse iff g is up
+	if(!ContolPressed) {
+		// Move the image with the mouse iff Ctrl is up
 		imgPos.x = e.pageX;
 		imgPos.y = e.pageY;
 	}
