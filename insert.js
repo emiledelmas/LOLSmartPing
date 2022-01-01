@@ -62,7 +62,7 @@ function ping() {
 
 let imgPos = {"x": 0, "y": 0};  // pos of the ping image
 let curPos = {"x": 0, "y": 0};  // cursor pos
-let ContolPressed; // true if Ctrl pressed
+let ControlPressed; // true if Ctrl pressed
 
 // pings to show
 let [pingDanger, pingWtf, pingHelp, pingOmw, pingNormal] = [false, false, false, false, false];
@@ -107,11 +107,12 @@ img.alt= "Ping!";
 img.style.position = "absolute";
 img.style.zIndex = 999;
 
+
 /* event listener */
 
 document.addEventListener('keydown', (e) => {
 	if(e.key === "Control") {
-		ContolPressed = true;
+		ControlPressed = true;
 		
 		// Position the ping image
 		img.style.left = (imgPos.x - 128 / 2) + "px";
@@ -122,20 +123,27 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('keyup', (e) => {
 	if(e.key === "Control") {
-		ContolPressed = false;
-		document.body.removeChild(img); // remove from screen
-		img.src = chrome.runtime.getURL("/images/logo128Normal.png");
+		ControlPressed = false;
+		try {
+			document.body.removeChild(img); // remove from screen
+		}
+		catch (err) {
+			console.log(err);
+		}
+		finally {
+			img.src = chrome.runtime.getURL("/images/logo128Normal.png");
 		
-		// Normal ping if the mouse did not move
-		if (![pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].includes(true))
-			pingNormal = true;
-		
-		ping();
+			// Normal ping if the mouse did not move
+			if (![pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].includes(true))
+				pingNormal = true;
+			
+			ping();
+		}
 	}
 });
 
 document.addEventListener('mousemove', (e) => {
-	if(!ContolPressed) {
+	if(!ControlPressed) {
 		// Move the image with the mouse iff Ctrl is up
 		imgPos.x = e.pageX;
 		imgPos.y = e.pageY;
@@ -179,3 +187,11 @@ document.addEventListener('mousemove', (e) => {
 	}
 });
 
+document.addEventListener("visibilitychange", function() {
+	try {
+		document.body.removeChild(img); // remove from screen
+	}
+	catch (err) {
+		console.log(err);
+	}
+});
