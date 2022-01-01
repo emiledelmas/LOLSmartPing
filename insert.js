@@ -105,10 +105,7 @@ img.src = chrome.runtime.getURL("/images/logo128Normal.png");
 img.alt= "Ping!";
 // css
 img.style.position = "absolute";
-img.style.opacity = 0; //default opacity to 0
 img.style.zIndex = 999;
-
-document.body.appendChild(img);
 
 /* event listener */
 
@@ -119,14 +116,14 @@ document.addEventListener('keydown', (e) => {
 		// Position the ping image
 		img.style.left = (imgPos.x - 128 / 2) + "px";
 		img.style.top = (imgPos.y - 128 / 2) + "px";
-		img.style.opacity = 1; // display
+		document.body.appendChild(img); // display
 	}
 });
 
 document.addEventListener('keyup', (e) => {
 	if(e.key === "Control") {
 		ContolPressed = false;
-		img.style.opacity = 0; // hide
+		document.body.removeChild(img); // remove from screen
 		img.src = chrome.runtime.getURL("/images/logo128Normal.png");
 		
 		// Normal ping if the mouse did not move
