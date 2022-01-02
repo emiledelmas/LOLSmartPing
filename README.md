@@ -6,7 +6,7 @@ Add smart League of Legends ping on Chrome-based browsers !
 
 ## Installation
 
-On [https://chrome.google.com/webstore/detail/lol-smart-ping/edfckebeghmfpiokhibgknogjcikfebc?hl=fr](Chrome Web Store), just click on "Add to Chrome".
+On the [Chrome Web Store](https://chrome.google.com/webstore/detail/lol-smart-ping/edfckebeghmfpiokhibgknogjcikfebc?hl=fr), just click on "Add to Chrome".
 
 Or via the source code for dev:
 
