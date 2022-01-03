@@ -119,11 +119,13 @@ document.addEventListener('keydown', (e) => {
 		img.style.top = (imgPos.y - 128 / 2) + "px";
 		document.body.appendChild(img); // display
 	}
+	else if(ControlPressed) { // If the Ctrl is already pressed means command like Ctrl+c or else
+		ControlPressed = false; // act as if Ctrl was released and don't ping
+	}
 });
 
 document.addEventListener('keyup', (e) => {
 	if(e.key === "Control") {
-		ControlPressed = false;
 		try {
 			document.body.removeChild(img); // remove from screen
 		}
@@ -131,14 +133,17 @@ document.addEventListener('keyup', (e) => {
 			console.log(err);
 		}
 		finally {
-			img.src = chrome.runtime.getURL("/images/logo128Normal.png");
-		
-			// Normal ping if the mouse did not move
-			if (![pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].includes(true))
-				pingNormal = true;
+			if(ControlPressed) {
+				img.src = chrome.runtime.getURL("/images/logo128Normal.png");
 			
-			ping();
+				// Normal ping if the mouse did not move
+				if (![pingDanger, pingWtf, pingHelp, pingOmw, pingNormal].includes(true))
+					pingNormal = true;
+				
+				ping();
+			}
 		}
+		ControlPressed = false;
 	}
 });
 
